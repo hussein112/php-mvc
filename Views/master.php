@@ -7,9 +7,25 @@
     <title>Document</title>
 </head>
 <body>  
-    <?php require($view); ?>
+    <!-- Static Contents (header, navigation, ...) -->
+
     <ul class="navigate">
         <a href="<?php echo ROOT_URL; ?>">Home</a>
     </ul>
+
+    <!-- End Static Contents (header, navigation, ...) -->
+
+
+    <?php 
+        require($view);
+    ?>
+
+    <!-- Static Contents (Footer) -->
+    <footer>
+        <hr>
+        Hi
+    </footer>
+    <!-- End Static Contents (Footer) -->
+
 </body>
 </html>
