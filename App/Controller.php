@@ -37,12 +37,25 @@ abstract class Controller{
     }
 
 
-    protected function render($viewmodel, $fullview){
-        $view_dir = $this->getViewDir();
-        $view = 'Views/' . $view_dir . '/' . $this->action . '.php';
-        if($fullview){ 
+    /**
+     * Get the view path & render (require) it
+     * 
+     * @param Bool $hasdir, whether the controller have a set of views in a separate directory.
+     * @param String $model
+     * @param Bool $fullview
+     * @return void
+     */
+    protected function render($hasdir, $viewname, $model, $fullview){
+        if($hasdir){
+            $view_dir = $this->getViewDir();
+            $view = 'Views/' . $view_dir . '/' . $viewname . '.php';
+        }else{
+            $view = 'Views/' . $viewname . '.php';
+        }
+
+        if($fullview){ // Full Html Page with the added section
             require("Views/master.php");
-        }else{ 
+        }else{ // only the added Section
             require($view);
         }
     }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App;
-
 
 class Bootstrap{
     private string $controller;
@@ -21,9 +19,9 @@ class Bootstrap{
      */
     public function preProcessRequest(){
         if($this->request['controller'] == ""){
-            $this->controller = "home";
+            $this->controller = "App\\Controllers\\HomeController";
         }else{
-            $controller = "App\Controllers\\" . ucwords($this->request['controller']);
+            $controller = "App\\Controllers\\" . ucfirst($this->request['controller']) . "Controller";
             $this->controller = $controller;
         }
 
@@ -41,8 +39,10 @@ class Bootstrap{
      */
     function getAction($action){
         if(is_int($action)){
-            return ['show', $action];
+            // View
+            return ['show', $action]; // show(23)
         }else{
+            // e.g., All --> View All
             return $action;
         }
     }
@@ -54,10 +54,10 @@ class Bootstrap{
      */
     public function getController(){
         $this->preProcessRequest();
-        if(class_exists($this->controller)){
+        if(class_exists($this->controller)){ // XController Exists?
             $parents = class_parents($this->controller);
-            if(in_array("App\\Controller", $parents)){ 
-                if(method_exists($this->controller, $this->action)){ 
+            if(in_array("App\\Controller", $parents)){ // XController extends Controller?
+                if(method_exists($this->controller, $this->action)){ // If method name 'action' exists
                     return new $this->controller($this->action, $this->request);
                 }else{
                     echo "Method doesn't exists";

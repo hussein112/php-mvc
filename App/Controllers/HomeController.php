@@ -7,7 +7,6 @@ use App\Models\Home;
 
 class HomeController extends Controller{
     protected function index(){
-        $model = new Home();
-        $this->render($model, true);
+        $this->render(new Home(), true);
     }
 }
